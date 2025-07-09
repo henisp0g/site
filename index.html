@@ -252,6 +252,10 @@
         const res = await fetch(urls[category][listKey]);
         const json = await res.json();
         data = Array.isArray(json) ? json : Object.values(json).find(v => Array.isArray(v) && v[0]?.nome) || [];
+
+        // Ordena os dados por posição (pos) numericamente
+        data.sort((a, b) => Number(a.pos) - Number(b.pos));
+
         const horario = json.horario || json.timestamp || '';
         const enviado = json.enviado_por || '';
         info.textContent = `atualizado em ${formatarData(horario)} por ${enviado || 'desconhecido'}`;
